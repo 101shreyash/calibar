@@ -1,0 +1,77 @@
+ body{
+    background-color: black;
+    text-align: center;
+    color: rgb(226, 25, 226);
+    margin-top: 8%;
+}
+
+h1{
+    font-size: 50px;
+
+}
+
+.links{
+    color: white;
+    font-size: 30px;
+}
+
+.links:hover{
+    color: rgb(251, 9, 251);
+}
+
+input{
+    font-size: 25px;
+    width: 25%;
+    height: 40px;
+    text-align: center;
+    background-color: grey;
+}
+::placeholder{
+    color: white;
+}
+
+
+
+
+button{
+    font-size: 30px;
+    background-color: grey;
+}
+
+button:hover{
+    background-color: rgb(247, 6, 247);
+    color: white;
+}
+
+.footer{
+    color: white;
+    font-size: 20px;
+}
+
+.footerlink{
+    color: white;
+}
+
+.footerlink:hover{
+    color: rgb(250, 4, 250);
+}
+
+.headpara{
+
+    font-size: 30px;
+    font-family: cursive;
+
+} 
+
+.searchinput{
+    height: 50px;
+    font-size: 30px;
+    background-color: plum;
+    color: black;
+}
+.searchinput::placeholder{
+    color: black;
+} 
+
+
+
