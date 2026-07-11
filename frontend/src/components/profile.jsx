@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Setting from "./setting";
+import { useForm } from "react-hook-form";
 
 
 function Profile() {
@@ -8,6 +9,7 @@ function Profile() {
     let [name, setname] = useState();
     let [comparisonid, setcomparisonid] = useState();
 
+      let {register , handleSubmit} = useForm();
 
     async function DbQuery() {
 
@@ -53,9 +55,27 @@ useEffect(() => {
 } , [])
 
 
+
+function FormSubmission(data) {
+
+console.log(data.comparisionid);
+
+    
+}
+
+
     return <>
         <Link className="links" to="/setting"> Setting</Link>
         <br /><br /><br />
+
+            <form onSubmit={handleSubmit(FormSubmission)}>
+
+        <input type="search" placeholder="Enter your friends comparison id" {...register("comparisionid")}/>
+                <button type="submit">search</button>
+
+        </form>
+
+
 
         <h1>{name} ,  Yours Profile Stats !</h1>
         <br /><br /><br /><br />
@@ -66,6 +86,10 @@ useEffect(() => {
         &nbsp; &nbsp; &nbsp; &nbsp;
         <Link className="links" to="/viewworkout">View Your Workout</Link>
         <br /><br /><br />
+
+
+
+        
 
     </>
 

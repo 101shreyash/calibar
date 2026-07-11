@@ -9,7 +9,7 @@ function Setting() {
 
     function AlertDelete() {
 
-        const bool = confirm("Are you sure you want to delete your account?")
+        const bool = confirm("Doing So will permanently delete all your workouts and your account are you sure?")
 
 
 
@@ -68,8 +68,10 @@ function Setting() {
         <br />
         <br />
         <button onClick={AlertLogout}>Logout</button>
-        <br />
-        <button onClick={AlertDelete}>Delete Account</button>
+        <br /><br /><br /><br />
+        <p className="alertdanger">Danger Zone</p>
+
+        <button className="alertbtn" onClick={AlertDelete}>Delete Account</button>
         <br />
 
     </>

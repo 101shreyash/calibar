@@ -24,9 +24,9 @@ app
   .route("/signup")
 
   .post((req, res) => {
-    const username = req.body.username?.toLowerCase(); // Implementation of transformation here 
+    const username = req.body.username?.toLowerCase(); // Implementation of transformation here
     const password = req.body.password;
-    const confirmpassword = req.body.confirmpassword
+    const confirmpassword = req.body.confirmpassword;
 
     // Comparision Id first parameter and second parameter
 
@@ -35,7 +35,6 @@ app
 
     // Using this comparision id we will compare our workout with our friends
     const comparisionid = firstparameter + randomid;
-
 
     //Validations
     if (!username) {
@@ -82,21 +81,18 @@ app
 
     if (!confirmpassword) {
       return res.status(400).json({
-        success : false,
-        error : "CONFIRM_PASSWORD_REQUIRED",
-        message : "You must confirm your password"
-      }) 
+        success: false,
+        error: "CONFIRM_PASSWORD_REQUIRED",
+        message: "You must confirm your password",
+      });
     }
 
     if (confirmpassword !== password) {
-  
       return res.status(400).json({
-        success : false,
-        error : "PASSWORD_CONFIRMATION_INVALID",
-        message : "Confirmation password didnt matched"
-      })
-
-      
+        success: false,
+        error: "PASSWORD_CONFIRMATION_INVALID",
+        message: "Confirmation password didnt matched",
+      });
     }
 
     bcrypt
@@ -118,14 +114,13 @@ app
 
           .catch((err) => {
             console.log(err.message);
-            const random = nanoid(6)
-
+            const random = nanoid(6);
 
             if (err.code === "23505") {
               return res.status(403).json({
-                error : "USERNAME_ALREDY_EXISTS",
+                error: "USERNAME_ALREDY_EXISTS",
                 success: false,
-                message : `Try this instead ${username}${random}`
+                message: `Try this instead ${username}${random}`,
               });
             }
 
@@ -210,7 +205,6 @@ const jwtvalidation = (req, res, next) => {
   const token = req.cookies.jwt;
 
   // console.log(`Cookies` , req.cookies);
-  
 
   if (!token) {
     return res.status(401).json({
@@ -235,76 +229,62 @@ const jwtvalidation = (req, res, next) => {
   });
 };
 
-// this route is reponsible for asking user What's should we call you ? 
+// this route is reponsible for asking user What's should we call you ?
 
-app.route("/name")
+app
+  .route("/name")
 
-.post(jwtvalidation , (req,res) => {
+  .post(jwtvalidation, (req, res) => {
+    const name = req.body.name?.toLowerCase();
+    const userid = req.user.userid;
 
-  const name = req.body.name?.toLowerCase()
-  const userid = req.user.userid
-
-  if (!name) {
-
-    return res.status(400).json({
-      success : false,
-      error : "NAME_REQUIRED",
-      message : "Please Enter your Name so that we can call your by your Name"
-    })
-    
-   }
-
-  if (name.length < 1 || name.length >30) {
-
-    return res.status(400).json({
-      success : false,
-      error : "NAME_TOOLONG_TOOSHORT",
-      message : "Name shouldn't consist of more than 30 character and less than 1"
-    })
-  
-   }
-
-   if (/\d/.test(name)) {
-
-    return res.status(400).json({
-      success : false,
-      error : "NUMBERS_NOT_ALLOWED_IN_NAME",
-      message : "Name shouldn't consist of any numbers"
-      
-    })
-    
-   }
-
-
-  async function DbQuery() {
-
-    try {
-
-  await pool.query("UPDATE users SET name = ($1) WHERE  userid = ($2)" , [name , userid])
-
-   return res.status(201).json({
-      success : true,
-      message : `Welcome to Calibar ${name}`
-    })
-      
+    if (!name) {
+      return res.status(400).json({
+        success: false,
+        error: "NAME_REQUIRED",
+        message: "Please Enter your Name so that we can call your by your Name",
+      });
     }
-    
-    catch (error) {
 
-      console.log(error);
-      return res.status(500).json({
-        success : false,
-        message : "Server Error"
-      })
-      
+    if (name.length < 1 || name.length > 30) {
+      return res.status(400).json({
+        success: false,
+        error: "NAME_TOOLONG_TOOSHORT",
+        message:
+          "Name shouldn't consist of more than 30 character and less than 1",
+      });
     }
-    
-  }
 
-  DbQuery();
+    if (/\d/.test(name)) {
+      return res.status(400).json({
+        success: false,
+        error: "NUMBERS_NOT_ALLOWED_IN_NAME",
+        message: "Name shouldn't consist of any numbers",
+      });
+    }
 
-})
+    async function DbQuery() {
+      try {
+        await pool.query("UPDATE users SET name = ($1) WHERE  userid = ($2)", [
+          name,
+          userid,
+        ]);
 
+        return res.status(201).json({
+          success: true,
+          message: `Welcome to Calibar ${name}`,
+        });
+      } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+          success: false,
+          message: "Server Error",
+        });
+      }
+    }
+
+    DbQuery();
+  });
 
 // Displays User Comparision Id  And NAME
 
@@ -338,7 +318,6 @@ app
     DbQuery();
   });
 
-
 app
   .route("/workouts")
 
@@ -362,13 +341,11 @@ app
         }
 
         if (/\d/.test(workoutname)) {
-
           return res.status(400).json({
-            success : false,
-            error : "NUMBERS_INCLUDES",
-            message : "Workout Name should'nt consists of Numbers"
-          })
-          
+            success: false,
+            error: "NUMBERS_INCLUDES",
+            message: "Workout Name should'nt consists of Numbers",
+          });
         }
 
         if (totalreps < 1 || totalsets < 1) {
@@ -474,13 +451,46 @@ app
     DbQuery();
   });
 
-
 app
   .route("/logout")
 
   .delete((req, res) => {
     res.clearCookie("jwt", { httpOnly: true, sameSite: "lax" });
-    return res.status(200).send("Sucessfully Loggedout")
+    return res.status(200).send("Sucessfully Loggedout");
+  });
+
+app
+  .route("/deleteaccount")
+
+  .delete(jwtvalidation, (req, res) => {
+    const reqid = req.user.userid;
+
+    async function DbQuery() {
+      try {
+
+        await pool.query("DELETE FROM workouts WHERE userid = $1", [reqid],);
+ 
+        await pool.query("DELETE FROM users WHERE userid = $1" , [reqid]);
+
+        res.clearCookie("jwt")
+        res.send("Account Sucessfully Deleted")
+    
+
+      } 
+      
+      catch (error) {
+
+        console.log(error);
+       return  res.status(500).send("Server Error")
+        
+
+
+      }
+
+    }
+
+    DbQuery();
+
   });
 
 app.listen(Port, () => {

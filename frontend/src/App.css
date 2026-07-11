@@ -75,3 +75,15 @@ button:hover{
 
 
 
+.alertdanger{
+    color: red;
+    font-size: 40px;
+}
+
+.alertbtn{
+    background-color: red;
+}
+
+.alertbtn:hover{
+    background-color: rgb(215, 0, 0);
+}
