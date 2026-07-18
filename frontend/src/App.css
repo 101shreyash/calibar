@@ -87,3 +87,9 @@ button:hover{
 .alertbtn:hover{
     background-color: rgb(215, 0, 0);
 }
+
+.userworkouts{
+    align-content: center;
+    height: 60px;
+    background-color: rgb(40, 39, 39);
+}

@@ -1,4 +1,4 @@
-import { useLocation} from "react-router-dom";
+import { Link, useLocation} from "react-router-dom";
 import { useForm } from "react-hook-form"
 
 
@@ -9,14 +9,15 @@ const Day = new Date().toLocaleDateString("en-US", { weekday: "long" });
 function TrackWorkout() {
 
 
-    let { register, handleSubmit } = useForm()
+    let { register, handleSubmit , reset} = useForm()
     
     
     const location = useLocation();
     
-    const username = location.state;
-    const name = username.Username;
+
+    const name = location.state.name
     
+
 
 
     function AfterSubmit(data) {
@@ -31,12 +32,14 @@ function TrackWorkout() {
         if (workoutname.length > 30 || workoutname.length <3) {
 
            return alert("Workout name should not be more than 30 characters and less than 3")
+           reset();
 
         }
 
         if (/\d/.test(workoutname)) {
 
             return alert("Workout name shouldnot consists of any numbers");
+            reset();
 
         }
 
@@ -57,7 +60,13 @@ function TrackWorkout() {
 
                 if (result.ok) {
 
-                    return alert("Thats The beast Workout Right there Keep Going")
+                    const postworkoutmotivation = ["There you champ you did it Again" , "Even in the Hardest Days You showed very few people did that today" , "You remind me the guy who worked everysingle day and at last conquers the earth" , "Even demi gods praising you well done soilder" , "The hardest battle is not the workout you've did but the mind you've controlled well done champ."]
+
+                    const rndvalue = Math.floor(Math.random()*postworkoutmotivation.length)
+                    const finalMessage = postworkoutmotivation[rndvalue]
+
+                     alert(finalMessage)
+                     return  reset();
                     
 
                 }
@@ -84,6 +93,10 @@ function TrackWorkout() {
 
     return <>
 
+        <h2>View <Link className="links"  to={"/viewworkout"}> Workouts</Link></h2>
+        <h2>View <Link className="links" to={"/profile"}> Profile</Link></h2>
+
+        
         {name ? <h1>Welcome {name} Its {Day} </h1> : ""}
 
         <form onSubmit={handleSubmit(AfterSubmit)}>

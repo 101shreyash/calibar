@@ -4,7 +4,6 @@ import bcrypt from "bcrypt";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import pool from "./db.js";
-import { nanoid } from "nanoid";
 
 const app = express();
 const Port = 8001;
@@ -28,13 +27,6 @@ app
     const password = req.body.password;
     const confirmpassword = req.body.confirmpassword;
 
-    // Comparision Id first parameter and second parameter
-
-    const firstparameter = "calibar";
-    const randomid = nanoid(5);
-
-    // Using this comparision id we will compare our workout with our friends
-    const comparisionid = firstparameter + randomid;
 
     //Validations
     if (!username) {
@@ -101,8 +93,8 @@ app
       .then((hashedpass) => {
         pool
           .query(
-            "INSERT INTO users (username,password,comparison_id) VALUES ($1,$2,$3)",
-            [username, hashedpass, comparisionid],
+            "INSERT INTO users (username,password,comparison_id) VALUES ($1,$2)",
+            [username, hashedpas],
           )
 
           .then((result) => {
@@ -286,7 +278,7 @@ app
     DbQuery();
   });
 
-// Displays User Comparision Id  And NAME
+// Displays UserNAME
 
 app
   .route("/viewprofile")
@@ -297,7 +289,7 @@ app
 
       try {
         const result = await pool.query(
-          "SELECT name , comparison_id  FROM users WHERE userid = ($1)",
+          "SELECT name , username FROM users WHERE userid = ($1)",
           [userid],
         );
 

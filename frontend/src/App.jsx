@@ -8,6 +8,7 @@ import Profile from "./components/profile";
 import TrackWorkout from "./components/trackworkout";
 import Viewworkout from "./components/viewworkout";
 import Setting from "./components/setting";
+import Compete from "./components/friendsaccount";
 
 function App () {
 
@@ -22,6 +23,7 @@ function App () {
         <Route path="/trackworkout" element = {<TrackWorkout/>}/>
         <Route path="/viewworkout" element = {<Viewworkout/>}/>
         <Route path="/setting" element = {<Setting/>}/>
+        <Route path="/compete" element = {<Compete/>}/>
 
         <Route path="*" element = {<h1>404 Not found</h1>}/>
 
