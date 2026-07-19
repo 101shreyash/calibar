@@ -60,13 +60,6 @@ function Viewworkout() {
 
                     })
 
-                    if (result.ok) {
-
-                     alert("Workout Deleted Sucessfully")
-
-
-                    }
-
 
                 }
 
