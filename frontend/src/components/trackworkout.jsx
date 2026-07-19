@@ -93,7 +93,6 @@ function TrackWorkout() {
 
     return <>
 
-        <h2>View <Link className="links"  to={"/viewworkout"}> Workouts</Link></h2>
         <h2>View <Link className="links" to={"/profile"}> Profile</Link></h2>
 
         

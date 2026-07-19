@@ -93,3 +93,9 @@ button:hover{
     height: 60px;
     background-color: rgb(40, 39, 39);
 }
+
+.deleteworkoutbtn{
+    font-size: 20px;
+    background-color: grey;
+
+}

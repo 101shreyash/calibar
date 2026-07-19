@@ -27,7 +27,6 @@ app
     const password = req.body.password;
     const confirmpassword = req.body.confirmpassword;
 
-
     //Validations
     if (!username) {
       return res.status(422).json({
@@ -92,10 +91,10 @@ app
 
       .then((hashedpass) => {
         pool
-          .query(
-            "INSERT INTO users (username,password,comparison_id) VALUES ($1,$2)",
-            [username, hashedpas],
-          )
+          .query("INSERT INTO users (username,password) VALUES ($1,$2)", [
+            username,
+            hashedpass,
+          ])
 
           .then((result) => {
             return res.status(201).json({
@@ -278,7 +277,7 @@ app
     DbQuery();
   });
 
-// Displays UserNAME
+// Displays UserNAME And Name
 
 app
   .route("/viewprofile")
@@ -375,7 +374,7 @@ app
     async function DbQuery() {
       try {
         const result = await pool.query(
-          "SELECT workoutname , totalreps , totalsets , workoutdate FROM workouts WHERE userid = ($1)",
+          "SELECT  workoutid , workoutname , totalreps , totalsets , workoutdate FROM workouts WHERE userid = ($1)",
           [userid],
         );
 
@@ -402,6 +401,37 @@ app
     }
 
     DbQuery();
+  });
+
+app
+  .route("/deleteworkouts/:workoutid")
+
+  .delete(jwtvalidation, (req, res) => {
+    const userid = req.user.userid;
+    const workoutid = req.params.workoutid;
+
+    async function DbQuery() {
+
+      try {
+        await pool.query(
+          "DELETE FROM workouts WHERE userid = $1 AND workoutid = $2",
+          [userid, workoutid],
+        );
+        return res.status(200).json({
+          success: true,
+          message: "Workout Deleted Sucessfully",
+        });
+      } catch (error) {
+        console.log(error.message);
+        return res.status(500).json({
+          success: false,
+          message: "Server Error",
+        });
+      }
+    }
+
+    DbQuery();
+    
   });
 
 // -------------------- Filteration  Via Workout Name  ---------------------,
@@ -459,30 +489,19 @@ app
 
     async function DbQuery() {
       try {
+        await pool.query("DELETE FROM workouts WHERE userid = $1", [reqid]);
 
-        await pool.query("DELETE FROM workouts WHERE userid = $1", [reqid],);
- 
-        await pool.query("DELETE FROM users WHERE userid = $1" , [reqid]);
+        await pool.query("DELETE FROM users WHERE userid = $1", [reqid]);
 
-        res.clearCookie("jwt")
-        res.send("Account Sucessfully Deleted")
-    
-
-      } 
-      
-      catch (error) {
-
+        res.clearCookie("jwt");
+        res.send("Account Sucessfully Deleted");
+      } catch (error) {
         console.log(error);
-       return  res.status(500).send("Server Error")
-        
-
-
+        return res.status(500).send("Server Error");
       }
-
     }
 
     DbQuery();
-
   });
 
 app.listen(Port, () => {

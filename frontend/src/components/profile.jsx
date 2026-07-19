@@ -76,8 +76,9 @@ navigate("/compete" , {state : data})
 
             <form onSubmit={handleSubmit(AfterSearch)}>
 
-        <input type="search" placeholder="Enter your friends username to compete" {...register("rivalusername")}/>
-                <button type="submit">search</button>
+        <h2>Compete with your friends</h2>
+        <input type="search" placeholder="Enter your frineds Username here " {...register("rivalusername")}/>
+              &nbsp;  <button type="submit">search</button>
 
         </form>
 
