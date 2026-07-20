@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import pool from "./db.js";
+import { nanoid } from "nanoid";
 
 const app = express();
 const Port = 8001;
@@ -411,7 +412,6 @@ app
     const workoutid = req.params.workoutid;
 
     async function DbQuery() {
-
       try {
         await pool.query(
           "DELETE FROM workouts WHERE userid = $1 AND workoutid = $2",
@@ -431,7 +431,6 @@ app
     }
 
     DbQuery();
-    
   });
 
 // -------------------- Filteration  Via Workout Name  ---------------------,
@@ -497,10 +496,50 @@ app
         res.send("Account Sucessfully Deleted");
       } catch (error) {
         console.log(error);
-        return res.status(500).send("Server Error");
+        return res.status(500).json({
+          success: false,
+          message: "Server Error",
+        });
       }
     }
 
+    DbQuery();
+  });
+
+app
+  .route("/activefor")
+
+  .get(jwtvalidation, (req, res) => {
+    const reqid = req.user.userid;
+
+    async function DbQuery() {
+      try {
+        const result = await pool.query(
+          "SELECT DISTINCT workoutdate FROM workouts WHERE userid = $1 ",
+          [reqid],
+        );
+
+        if (result.rowCount === 0) {
+          return res.status(200).json({
+            success: true,
+            message: "0 days",
+          });
+        }
+
+        const activedays = result.rows.length;
+
+        return res.status(200).json({
+          success: true,
+          message: `${activedays} days`,
+        });
+      } catch (error) {
+        console.log(error.message);
+        return res.status(500).json({
+          success: false,
+          message: "Server Error",
+        });
+      }
+    }
     DbQuery();
   });
 

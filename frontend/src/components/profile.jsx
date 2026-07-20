@@ -9,36 +9,37 @@ function Profile() {
 
     let [displayname, setdisplayname] = useState();
     let [username, setusername] = useState();
-    
-      let {register , handleSubmit} = useForm();
+    let [activedays, setactivedays] = useState();
 
-      const navigate = useNavigate();
+    let { register, handleSubmit } = useForm();
+
+    const navigate = useNavigate();
 
     async function DbQuery() {
 
         try {
 
-                const result = await fetch("http://localhost:8001/viewprofile", {
+            const result = await fetch("http://localhost:8001/viewprofile", {
 
-                    method: "GET",
-                    credentials: "include",
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                })                
+                method: "GET",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
 
-                const userinfo = await result.json()
+            const userinfo = await result.json()
 
-                console.log(userinfo);
-                
-                const Name = userinfo.message.name
-                const username = userinfo.message.username
+            console.log(userinfo);
 
-                setdisplayname(Name)
-                setusername(username)
+            const Name = userinfo.message.name
+            const username = userinfo.message.username
+
+            setdisplayname(Name)
+            setusername(username)
 
 
-            }
+        }
 
 
 
@@ -52,33 +53,74 @@ function Profile() {
 
     }
 
-useEffect(() => {
+    useEffect(() => {
 
 
         DbQuery();
 
-} , [])
+    }, [])
+
+    async function ActiveCount() {
+
+       try {
+
+         const result = await fetch("http://localhost:8001/activefor", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "include"
+        })
+
+        const days = await result.json()
+
+        const daysvalue = days.message
+
+        const trimmedvalue = daysvalue.substring(0 , 1);
+
+        setactivedays(trimmedvalue)
+        
+        
+
+        
+       } 
+       
+       catch (error) {
+
+        alert("Server Error")
+        console.log(error);
+        
+        
+       }
+
+    }
+
+    useEffect(()=> {
+
+        ActiveCount();
+
+    } , [])
 
 
 
-function AfterSearch(data) {
+    function AfterSearch(data) {
 
-    console.log(data); 
-navigate("/compete" , {state : data})
+        console.log(data);
+        navigate("/compete", { state: data })
 
-    
-}
+
+    }
 
 
     return <>
         <Link className="links" to="/setting"> Setting</Link>
         <br /><br /><br />
 
-            <form onSubmit={handleSubmit(AfterSearch)}>
+        <form onSubmit={handleSubmit(AfterSearch)}>
 
-        <h2>Compete with your friends</h2>
-        <input type="search" placeholder="Enter your frineds Username here " {...register("rivalusername")}/>
-              &nbsp;  <button type="submit">search</button>
+            <h2>Compete with your friends</h2>
+            <input type="search" placeholder="Enter your frineds Username here " {...register("rivalusername")} />
+            &nbsp;  <button type="submit">search</button>
 
         </form>
 
@@ -87,15 +129,16 @@ navigate("/compete" , {state : data})
         <h1>{displayname} ,  Yours Profile Stats !</h1>
         <br /><br /><br /><br />
 
-        <h2> username : {username} </h2>        <br /><br /><br /><br /><br />
-        <Link className="links" to="/trackworkout" state={{name : displayname}} > Track Your workout</Link>
+        <h2> username : {username} </h2>
+        <h2> Its been {activedays} day Since youre working out . Keep Going !</h2>        <br /><br /><br /><br /><br />
+        <Link className="links" to="/trackworkout" state={{ name: displayname }} > Track Your workout</Link>
         &nbsp; &nbsp; &nbsp; &nbsp;
         <Link className="links" to="/viewworkout">View Your Workout</Link>
         <br /><br /><br />
 
 
 
-        
+
 
     </>
 

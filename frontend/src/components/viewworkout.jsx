@@ -7,6 +7,7 @@ function Viewworkout() {
 
 
     let [workouts, setworkouts] = useState([]);
+    
 
 
     async function DbQuery() {
@@ -39,13 +40,13 @@ function Viewworkout() {
     function DeleteWorkout(deleteid) {
 
         const deleteconfirm = confirm("Are you sure you want to delete this workout?")
-        
+
         if (deleteconfirm === true) {
 
             console.log(deleteid);
-            
 
-           async function NetworkCall() {
+
+            async function NetworkCall() {
 
                 try {
 
@@ -66,7 +67,7 @@ function Viewworkout() {
                 catch (error) {
 
                     alert("Server Error")
-                   return console.log(error);
+                    return console.log(error);
 
                 }
 
