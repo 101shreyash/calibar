@@ -74,11 +74,8 @@ function Profile() {
 
         const days = await result.json()
 
-        const daysvalue = days.message
-
-        const trimmedvalue = daysvalue.substring(0 , 1);
-
-        setactivedays(trimmedvalue)
+        const activedays = days.message
+        setactivedays(activedays)
         
         
 
@@ -130,7 +127,7 @@ function Profile() {
         <br /><br /><br /><br />
 
         <h2> username : {username} </h2>
-        <h2> Its been {activedays} day Since youre working out . Keep Going !</h2>        <br /><br /><br /><br /><br />
+        <h2> Its been {activedays} Since youre working out . Keep Going !</h2>        <br /><br /><br /><br /><br />
         <Link className="links" to="/trackworkout" state={{ name: displayname }} > Track Your workout</Link>
         &nbsp; &nbsp; &nbsp; &nbsp;
         <Link className="links" to="/viewworkout">View Your Workout</Link>

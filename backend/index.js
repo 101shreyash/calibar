@@ -522,7 +522,7 @@ app
         if (result.rowCount === 0) {
           return res.status(200).json({
             success: true,
-            message: "0 days",
+            message: "0 day",
           });
         }
 
@@ -530,7 +530,7 @@ app
 
         return res.status(200).json({
           success: true,
-          message: `${activedays} days`,
+          message: `${activedays} day`,
         });
       } catch (error) {
         console.log(error.message);
