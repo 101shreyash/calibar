@@ -543,6 +543,43 @@ app
     DbQuery();
   });
 
+app
+  .route("/workoutcounts")
+
+  .get(jwtvalidation, (req, res) => {
+    async function DbQuery() {
+      const userid = req.user.userid;
+
+      try {
+        const result = await pool.query(
+          "SELECT COUNT (workoutname) FROM workouts WHERE userid = $1",
+          [userid],
+        );
+
+
+      const totalcount =  result.rows[0].count;
+
+    return res.json({
+      success : true,
+        message : totalcount,
+
+      })
+        
+
+      } 
+      
+      catch (error) {
+        console.log(error.message);
+        return res.status(500).json({
+          success: false,
+          message: "Server Error",
+        });
+      }
+    }
+
+    DbQuery();
+  });
+
 app.listen(Port, () => {
   console.log(`Server Started At ${Port}`);
 });

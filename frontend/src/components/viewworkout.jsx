@@ -9,7 +9,8 @@ function Viewworkout() {
 
 
     let [workouts, setworkouts] = useState([]);
-    
+    let [workoutcount, setworkoutcount] = useState();
+
 
 
     async function DbQuery() {
@@ -81,11 +82,56 @@ function Viewworkout() {
     }
 
 
+    async function WorkoutCounts() {
+
+        try {
+
+            const result = await fetch("http://localhost:8001/workoutcounts", {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+
+                },
+                credentials: "include"
+
+            })
+
+            const data = await result.json()
+            const totalcount = data.message
+
+            setworkoutcount(totalcount)
+            
+
+
+
+        }
+
+        catch (error) {
+
+            alert("Server Error")
+            console.log(error);
+
+
+        }
+
+
+    }
+
+    useEffect(() => {
+
+
+        WorkoutCounts();
+
+    }, [])
+
+
+
 
     return <>
-      
-      <Link className="links" to= "/searchworkouts"> Search Your Workouts</Link>
-      <h1>All Your workouts!</h1>
+
+        <Link className="links" to="/searchworkouts"> Search Your Workouts</Link>
+        <p># The Goal in life is to get 10 thousand workouts done , right now you've did {workoutcount} workout keep going .</p>
+        <h1>All Your workouts!</h1>
         {workouts.map((allworkouts) => {
 
             const date = allworkouts.workoutdate.substring(0, 10)

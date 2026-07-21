@@ -1,6 +1,8 @@
 
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+
 
  function SearchWorkouts(params) {
     
@@ -56,6 +58,7 @@ import { useState } from "react";
 
     return <>
     
+    <Link className="links" to= "/viewworkout">View all workouts</Link>
     <h1>Search Your Workouts Below</h1>
     <form onSubmit={handleSubmit(AfterSearch)}>
 

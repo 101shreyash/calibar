@@ -96,7 +96,7 @@ function TrackWorkout() {
         <h2>View <Link className="links" to={"/profile"}> Profile</Link></h2>
 
         
-        {name ? <h1>Welcome {name} Its {Day} </h1> : ""}
+        {name ? <h1>Welcome {name} Its {Day} And You showed up Again </h1> : ""}
 
         <form onSubmit={handleSubmit(AfterSubmit)}>
             <p className="headpara">What workout you did today</p>
