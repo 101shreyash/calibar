@@ -1,6 +1,8 @@
 
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import SearchWorkouts from "./searchworkouts";
+import { Link } from "react-router-dom";
 
 
 function Viewworkout() {
@@ -81,9 +83,9 @@ function Viewworkout() {
 
 
     return <>
-
-        <h1> ALL your workouts.</h1>
-
+      
+      <Link className="links" to= "/searchworkouts"> Search Your Workouts</Link>
+      <h1>All Your workouts!</h1>
         {workouts.map((allworkouts) => {
 
             const date = allworkouts.workoutdate.substring(0, 10)

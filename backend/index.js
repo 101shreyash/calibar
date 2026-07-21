@@ -445,8 +445,8 @@ app
         const userid = req.user.userid;
 
         const result = await pool.query(
-          "SELECT workoutname , totalreps , totalsets , workoutdate FROM workouts WHERE userid = ($1) AND workoutname ILIKE ($2)",
-          [userid, `%${req.params.workoutname}%`],
+          "SELECT workoutid, workoutname , totalreps , totalsets , workoutdate FROM workouts WHERE userid = ($1) AND workoutname ILIKE ($2)",
+          [userid, `${req.params.workoutname}%`],
         );
 
         if (result.rowCount === 0) {
