@@ -7,11 +7,11 @@ import { useForm } from "react-hook-form";
 
 function Profile() {
 
-    let [displayname, setdisplayname] = useState();
-    let [username, setusername] = useState();
-    let [activedays, setactivedays] = useState();
+    let [displayname, setdisplayname] = useState('');
+    let [username, setusername] = useState('');
+    let [activedays, setactivedays] = useState(0);
 
-    let { register, handleSubmit } = useForm();
+    let { register, handleSubmit , reset } = useForm();
 
     const navigate = useNavigate();
 
@@ -62,41 +62,41 @@ function Profile() {
 
     async function ActiveCount() {
 
-       try {
+        try {
 
-         const result = await fetch("http://localhost:8001/activefor", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            credentials: "include"
-        })
+            const result = await fetch("http://localhost:8001/activefor", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include"
+            })
 
-        const days = await result.json()
+            const days = await result.json()
 
-        const activedays = days.message
-        setactivedays(activedays)
-        
-        
+            const activedays = days.message
+            setactivedays(activedays)
 
-        
-       } 
-       
-       catch (error) {
 
-        alert("Server Error")
-        console.log(error);
-        
-        
-       }
+
+
+        }
+
+        catch (error) {
+
+            alert("Server Error")
+            console.log(error);
+
+
+        }
 
     }
 
-    useEffect(()=> {
+    useEffect(() => {
 
         ActiveCount();
 
-    } , [])
+    }, [])
 
 
 
@@ -109,17 +109,22 @@ function Profile() {
     }
 
 
+    
+
     return <>
+
         <Link className="links" to="/setting"> Setting</Link>
         <br /><br /><br />
+
 
         <form onSubmit={handleSubmit(AfterSearch)}>
 
             <h2>Compete with your friends</h2>
-            <input type="search" placeholder="Enter your frineds Username here " {...register("rivalusername")} />
+            <input type="search" placeholder="Enter your friends Username here " {...register("rivalusername")} />
             &nbsp;  <button type="submit">search</button>
 
         </form>
+
 
 
 

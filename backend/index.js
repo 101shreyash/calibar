@@ -5,9 +5,14 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import pool from "./db.js";
 import { nanoid } from "nanoid";
+import multer from "multer"
 
 const app = express();
 const Port = 8001;
+
+
+const uploadfile = multer({dest : "profilepicture/"}) 
+
 
 app.use(
   cors({
@@ -220,6 +225,23 @@ const jwtvalidation = (req, res, next) => {
     }
   });
 };
+
+
+app.route("/authcheck")
+
+.get(jwtvalidation , (req,res) => {
+
+ return res.status(200).json({
+    success : true,
+    message : "User Authenticated"
+  })
+
+  
+
+  
+})
+
+
 
 // this route is reponsible for asking user What's should we call you ?
 
@@ -492,7 +514,7 @@ app
 
         await pool.query("DELETE FROM users WHERE userid = $1", [reqid]);
 
-        res.clearCookie("jwt");
+        res.clearCookie("jwt" , {httpOnly : true , sameSite : "lax"});
         res.send("Account Sucessfully Deleted");
       } catch (error) {
         console.log(error);
@@ -579,6 +601,19 @@ app
 
     DbQuery();
   });
+
+
+  app.route("/uploadprofile")
+
+  .post(uploadfile.single("pp") , (req,res) => {
+    
+    console.log(req.file);
+
+    res.status(200).send("Sucessfully Uploaded")
+    
+
+
+  })
 
 app.listen(Port, () => {
   console.log(`Server Started At ${Port}`);
