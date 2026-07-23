@@ -20,9 +20,16 @@ function UploadProfile() {
 
 
                 const result = await fetch("http://localhost:8001/uploadprofile", {
+                    body : formData,
                     method: "POST",
                     credentials: "include"
                 })
+
+                
+                const profilepath = await result.json()
+                console.log(profilepath);
+                
+                
 
                 if (result.ok) {
 

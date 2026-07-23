@@ -5,14 +5,12 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import pool from "./db.js";
 import { nanoid } from "nanoid";
-import multer from "multer"
+import multer from "multer";
 
 const app = express();
 const Port = 8001;
 
-
-const uploadfile = multer({dest : "profilepicture/"}) 
-
+const uploadfile = multer({ dest: "profilepicture/" });
 
 app.use(
   cors({
@@ -226,22 +224,15 @@ const jwtvalidation = (req, res, next) => {
   });
 };
 
+app
+  .route("/authcheck")
 
-app.route("/authcheck")
-
-.get(jwtvalidation , (req,res) => {
-
- return res.status(200).json({
-    success : true,
-    message : "User Authenticated"
-  })
-
-  
-
-  
-})
-
-
+  .get(jwtvalidation, (req, res) => {
+    return res.status(200).json({
+      success: true,
+      message: "User Authenticated",
+    });
+  });
 
 // this route is reponsible for asking user What's should we call you ?
 
@@ -514,7 +505,7 @@ app
 
         await pool.query("DELETE FROM users WHERE userid = $1", [reqid]);
 
-        res.clearCookie("jwt" , {httpOnly : true , sameSite : "lax"});
+        res.clearCookie("jwt", { httpOnly: true, sameSite: "lax" });
         res.send("Account Sucessfully Deleted");
       } catch (error) {
         console.log(error);
@@ -578,19 +569,13 @@ app
           [userid],
         );
 
+        const totalcount = result.rows[0].count;
 
-      const totalcount =  result.rows[0].count;
-
-    return res.json({
-      success : true,
-        message : totalcount,
-
-      })
-        
-
-      } 
-      
-      catch (error) {
+        return res.json({
+          success: true,
+          message: totalcount,
+        });
+      } catch (error) {
         console.log(error.message);
         return res.status(500).json({
           success: false,
@@ -602,18 +587,34 @@ app
     DbQuery();
   });
 
+app
+  .route("/uploadprofile")
 
-  app.route("/uploadprofile")
+  .post(jwtvalidation, uploadfile.single("pp"), (req, res) => {
+    const profilepicture = req.file.filename;
+    const userid = req.user.userid;
 
-  .post(uploadfile.single("pp") , (req,res) => {
-    
-    console.log(req.file);
+    async function DbQuery() {
+      try {
+        await pool.query(
+          "UPDATE users SET profilepicture = $1 WHERE userid = $2",
+          [profilepicture, userid],
+        );
+        return res.status(200).json({
+          success: true,
+          message: profilepicture,
+        });
+      } catch (error) {
+        console.log(error.message);
+        return res.status(500).json({
+          success: false,
+          message: "Server Error",
+        });
+      }
+    }
 
-    res.status(200).send("Sucessfully Uploaded")
-    
-
-
-  })
+    DbQuery();
+  });
 
 app.listen(Port, () => {
   console.log(`Server Started At ${Port}`);

@@ -41,7 +41,7 @@ function AskName() {
 
       if (result.ok) {
 
-         navigate("/profile")
+         navigate("/uploadprofile")
          
       }
          
