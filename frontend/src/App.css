@@ -1,117 +1,113 @@
-  body{
-    background-color: black;
-    text-align: center;
-    color: rgb(226, 25, 226);
-    margin-top: 8%;
+body {
+  background-color: black;
+  text-align: center;
+  color: rgb(226, 25, 226);
+  margin-top: 8%;
 }
 
-h1{
-    font-size: 50px;
-
+h1 {
+  font-size: 50px;
 }
 
-.links{
-    color: white;
-    font-size: 30px;
+.links {
+  color: white;
+  font-size: 30px;
 }
 
-.links:hover{
-    color: rgb(251, 9, 251);
+.links:hover {
+  color: rgb(251, 9, 251);
 }
 
-input{
-    font-size: 25px;
-    width: 25%;
-    height: 40px;
-    text-align: center;
-    background-color: grey;
+input {
+  font-size: 25px;
+  width: 25%;
+  height: 40px;
+  text-align: center;
+  background-color: grey;
 }
-::placeholder{
-    color: white;
-}
-
-
-
-
-button{
-    font-size: 30px;
-    background-color: grey;
+::placeholder {
+  color: white;
 }
 
-button:hover{
-    background-color: rgb(247, 6, 247);
-    color: white;
+button {
+  font-size: 30px;
+  background-color: grey;
 }
 
-.footer{
-    color: white;
-    font-size: 20px;
+button:hover {
+  background-color: rgb(247, 6, 247);
+  color: white;
 }
 
-.footerlink{
-    color: white;
+.footer {
+  color: white;
+  font-size: 20px;
 }
 
-.footerlink:hover{
-    color: rgb(250, 4, 250);
+.footerlink {
+  color: white;
 }
 
-.headpara{
-
-    font-size: 30px;
-    font-family: cursive;
-
-} 
-
-.searchinput{
-    height: 50px;
-    font-size: 30px;
-    background-color: plum;
-    color: black;
-}
-.searchinput::placeholder{
-    color: black;
-} 
-
-
-
-.alertdanger{
-    color: red;
-    font-size: 40px;
+.footerlink:hover {
+  color: rgb(250, 4, 250);
 }
 
-.alertbtn{
-    background-color: red;
+.headpara {
+  font-size: 30px;
+  font-family: cursive;
 }
 
-.alertbtn:hover{
-    background-color: rgb(215, 0, 0);
+.searchinput {
+  height: 50px;
+  font-size: 30px;
+  background-color: plum;
+  color: black;
+}
+.searchinput::placeholder {
+  color: black;
 }
 
-.userworkouts{
-    align-content: center;
-    height: 60px;
-    background-color: rgb(40, 39, 39);
+.alertdanger {
+  color: red;
+  font-size: 40px;
 }
 
-.deleteworkoutbtn{
-    font-size: 20px;
-    background-color: grey;
-
+.alertbtn {
+  background-color: red;
 }
 
-p{
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 25px;
-} 
+.alertbtn:hover {
+  background-color: rgb(215, 0, 0);
+}
 
+.userworkouts {
+  align-content: center;
+  height: 60px;
+  background-color: rgb(40, 39, 39);
+}
 
-.profilepicture{
-    align-items: center;
-    margin-left: 46%;
-    align-content: center;
-    border-radius: 50%;
-    width: 150px;
-    height: 150px;
-    background-color: white;
+.deleteworkoutbtn {
+  font-size: 20px;
+  background-color: grey;
+}
+
+p {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 25px;
+}
+
+.image-container {
+  border: 5px solid plum;
+  align-items: center;
+  align-content: center;
+  border-radius: 50%;
+  margin-left: 43%;
+  height: 300px;
+  width: 300px;
+}
+
+.profilepicture {
+  border-radius: 50%;
+  height: 300px;
+  width: 300px;
 }

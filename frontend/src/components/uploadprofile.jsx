@@ -1,10 +1,11 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 function UploadProfile() {
 
     const { register, handleSubmit, reset } = useForm();
+    const navigate = useNavigate();
 
 
     function AfterUpload(data) {
@@ -19,7 +20,7 @@ function UploadProfile() {
             try {
 
 
-                const result = await fetch("http://localhost:8001/uploadprofile", {
+                const result = await fetch("http://localhost:8001/profilepicture", {
                     body : formData,
                     method: "POST",
                     credentials: "include"
@@ -34,7 +35,8 @@ function UploadProfile() {
                 if (result.ok) {
 
                     alert("Profile Picture Uploaded Sucessfully")
-                    reset();
+                    navigate("/profile")
+                    
 
 
 

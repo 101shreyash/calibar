@@ -22,6 +22,7 @@ app.use(
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
+app.use("/uploads" , express.static("profilepicture/")) // server files from this particular folder
 
 app
   .route("/signup")
@@ -588,7 +589,7 @@ app
   });
 
 app
-  .route("/uploadprofile")
+  .route("/profilepicture")
 
   .post(jwtvalidation, uploadfile.single("pp"), (req, res) => {
     const profilepicture = req.file.filename;
@@ -604,6 +605,34 @@ app
           success: true,
           message: profilepicture,
         });
+      } catch (error) {
+        console.log(error.message);
+        return res.status(500).json({
+          success: false,
+          message: "Server Error",
+        });
+      }
+    }
+
+    DbQuery();
+  })
+
+  .get(jwtvalidation, (req, res) => {
+    const userid = req.user.userid;
+
+    async function DbQuery() {
+      try {
+        const result = await pool.query(
+          "SELECT profilepicture FROM users WHERE userid = $1",
+          [userid],
+        );
+
+        res.json({
+          message : result.rows[0].profilepicture
+        })
+
+       
+          
       } catch (error) {
         console.log(error.message);
         return res.status(500).json({

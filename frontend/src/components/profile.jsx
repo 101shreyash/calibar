@@ -5,13 +5,16 @@ import { useForm } from "react-hook-form";
 
 
 
+
 function Profile() {
 
     let [displayname, setdisplayname] = useState('');
     let [username, setusername] = useState('');
     let [activedays, setactivedays] = useState(0);
+    let [profilepicture, setprofilepicture] = useState('')
 
-    let { register, handleSubmit , reset } = useForm();
+
+    let { register, handleSubmit, reset } = useForm();
 
     const navigate = useNavigate();
 
@@ -59,6 +62,43 @@ function Profile() {
         DbQuery();
 
     }, [])
+
+    async function userProfilePicture() {
+
+        try {
+
+            const result = await fetch("http://localhost:8001/profilepicture" , {
+                method : "GET", 
+                credentials : "include"
+            })
+
+            const data = await result.json();
+            const userprofilepic = data.message
+
+           setprofilepicture(userprofilepic)            
+            
+            
+        } 
+        
+        catch (error) {
+
+            console.log(error);
+         return  alert("Server Error")
+            
+            
+        }
+
+        
+    }
+
+    useEffect(() => {
+
+        userProfilePicture();
+
+
+    }, [])
+
+
 
     async function ActiveCount() {
 
@@ -109,7 +149,7 @@ function Profile() {
     }
 
 
-    
+
 
     return <>
 
@@ -130,6 +170,10 @@ function Profile() {
 
         <h1>{displayname} ,  Yours Profile Stats !</h1>
         <br /><br /><br /><br />
+        <div className="image-container">
+            {console.log(profilepicture)}
+            <img className="profilepicture" src={`http://localhost:8001/uploads/${profilepicture}`} alt="profilepicture" />
+        </div>
 
         <h2> username : {username} </h2>
         <h2> Its been {activedays} Since youre working out . Keep Going !</h2>        <br /><br /><br /><br /><br />
