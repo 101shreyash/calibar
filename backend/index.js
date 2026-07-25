@@ -22,7 +22,7 @@ app.use(
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
-app.use("/uploads" , express.static("profilepicture/")) // server files from this particular folder
+app.use("/uploads" , express.static("profilepicture/")) // serve files from this particular folder
 
 app
   .route("/signup")

@@ -67,28 +67,28 @@ function Profile() {
 
         try {
 
-            const result = await fetch("http://localhost:8001/profilepicture" , {
-                method : "GET", 
-                credentials : "include"
+            const result = await fetch("http://localhost:8001/profilepicture", {
+                method: "GET",
+                credentials: "include"
             })
 
             const data = await result.json();
             const userprofilepic = data.message
 
-           setprofilepicture(userprofilepic)            
-            
-            
-        } 
-        
+            setprofilepicture(userprofilepic)
+
+
+        }
+
         catch (error) {
 
             console.log(error);
-         return  alert("Server Error")
-            
-            
+            return alert("Server Error")
+
+
         }
 
-        
+
     }
 
     useEffect(() => {
@@ -162,21 +162,22 @@ function Profile() {
             <h2>Compete with your friends</h2>
             <input type="search" placeholder="Enter your friends Username here " {...register("rivalusername")} />
             &nbsp;  <button type="submit">search</button>
+            <br /><br /><br />
 
         </form>
 
 
 
-
+        <div className="image-container">
+            <img className="profilepicture" src={`http://localhost:8001/uploads/${profilepicture}`} alt="userpicture" />
+        </div>
         <h1>{displayname} ,  Yours Profile Stats !</h1>
         <br /><br /><br /><br />
-        <div className="image-container">
-            {console.log(profilepicture)}
-            <img className="profilepicture" src={`http://localhost:8001/uploads/${profilepicture}`} alt="profilepicture" />
-        </div>
+
 
         <h2> username : {username} </h2>
-        <h2> Its been {activedays} Since youre working out . Keep Going !</h2>        <br /><br /><br /><br /><br />
+        <h2> Its been {activedays} Since youre working out . Keep Going !</h2>        
+        <br /><br /><br /><br /><br />
         <Link className="links" to="/trackworkout" state={{ name: displayname }} > Track Your workout</Link>
         &nbsp; &nbsp; &nbsp; &nbsp;
         <Link className="links" to="/viewworkout">View Your Workout</Link>
