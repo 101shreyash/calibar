@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
@@ -7,6 +8,46 @@ function AskName() {
    let { register, handleSubmit } = useForm()
 
    const navigate = useNavigate();
+
+
+   async function CheckName() {
+
+      try {
+
+         const result = await fetch("http://localhost:8001/viewprofile", {
+            method: "GET",
+            credentials: "include",
+            headers: {
+               "Content-Type": "application/json"
+            }
+         })
+
+         const data = await result.json()
+         const nameExistence = data.message.name;
+
+         if (nameExistence) {
+
+           return navigate("/uploadprofile")
+            
+         }
+
+
+      } catch (error) {
+
+         console.log(error);
+         alert("Server Error")
+
+
+      }
+
+   }
+
+   useEffect(() => {
+
+      CheckName();
+   }, [])
+
+
 
    function AfterSubmit(data) {
 

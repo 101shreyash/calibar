@@ -1,5 +1,4 @@
-import { useNavigate } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
 
 
 
@@ -72,8 +71,6 @@ function Setting() {
         <p className="alertdanger">Danger Zone</p>
 
         <button className="alertbtn" onClick={AlertDelete}>Delete Account</button>
-        <br />
-
     </>
 
 }

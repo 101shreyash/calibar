@@ -8,7 +8,7 @@ import { nanoid } from "nanoid";
 import multer from "multer";
 
 const app = express();
-const Port = 8001;
+const Port = process.env.PORT
 
 const uploadfile = multer({ dest: "profilepicture/" });
 
@@ -224,16 +224,6 @@ const jwtvalidation = (req, res, next) => {
     }
   });
 };
-
-app
-  .route("/authcheck")
-
-  .get(jwtvalidation, (req, res) => {
-    return res.status(200).json({
-      success: true,
-      message: "User Authenticated",
-    });
-  });
 
 // this route is reponsible for asking user What's should we call you ?
 

@@ -1,5 +1,9 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+
+
+
 
 
 function UploadProfile() {
@@ -8,12 +12,58 @@ function UploadProfile() {
     const navigate = useNavigate();
 
 
+    async function CheckImage() {
+
+        try {
+
+            const result = await fetch("http://localhost:8001/profilepicture", {
+
+                credentials: "include",
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+
+                }
+
+
+            })
+
+            const data = await result.json()
+
+            
+
+            if (data.message) {
+
+                return navigate("/profile")
+
+            }
+
+        }
+
+        catch (error) {
+
+            console.log(error.message);
+            alert("Server Error")
+
+
+        }
+
+    }
+
+    useEffect(() => {
+
+
+        CheckImage();
+
+    }, [])
+
+
     function AfterUpload(data) {
 
         const profilepicture = data.userpp[0]
 
         const formData = new FormData()
-        formData.append( "pp", profilepicture)
+        formData.append("pp", profilepicture)
 
         async function NetworkCall() {
 
@@ -21,22 +71,22 @@ function UploadProfile() {
 
 
                 const result = await fetch("http://localhost:8001/profilepicture", {
-                    body : formData,
+                    body: formData,
                     method: "POST",
                     credentials: "include"
                 })
 
-                
+
                 const profilepath = await result.json()
                 console.log(profilepath);
-                
-                
+
+
 
                 if (result.ok) {
 
                     alert("Profile Picture Uploaded Sucessfully")
                     navigate("/profile")
-                    
+
 
 
 
