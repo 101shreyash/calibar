@@ -108,6 +108,13 @@ p {
   width: 200px;
 } 
 
+.profilepicture:hover {
+  border: 5px solid #aecaff;;
+  border-radius: 50%;
+  height: 220px;
+  width: 220px;
+} 
+
  
 .goto{
   text-decoration: none;
