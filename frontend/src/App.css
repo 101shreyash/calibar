@@ -23,10 +23,12 @@ input {
   width: 25%;
   height: 40px;
   text-align: center;
-  background-color: grey;
+  /* background-color: grey; */
+  background-color: #aecaff;
 }
 ::placeholder {
-  color: white;
+  /* color: white; */
+  color: black;
 }
 
 button {
@@ -97,20 +99,24 @@ p {
   font-size: 25px;
 }
 
-.image-container {
-  border: 5px solid #0466c8;
-  align-items: center;
-  align-content: center;
-  border-radius: 50%;
-  margin-left: 43%;
-  height: 200px;
-  width: 200px;
-}
+
 
 .profilepicture {
+  border: 5px solid #aecaff;;
   border-radius: 50%;
   height: 200px;
   width: 200px;
 } 
 
  
+.goto{
+  text-decoration: none;
+  color: #001233;
+  font-size: 30px;
+  background-color: #aecaff;
+  height: 40px;
+}
+
+.goto:hover{
+  background-color: #0466c8;
+}

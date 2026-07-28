@@ -11,8 +11,6 @@ function Viewworkout() {
     let [workouts, setworkouts] = useState([]);
     let [workoutcount, setworkoutcount] = useState();
 
-
-
     async function DbQuery() {
 
 
@@ -49,7 +47,7 @@ function Viewworkout() {
             console.log(deleteid);
 
 
-            async function NetworkCall() {
+            async function DeleteWorkout() {
 
                 try {
 
@@ -64,6 +62,15 @@ function Viewworkout() {
 
                     })
 
+                    const data = await result.json()
+
+                    if (data.message === "Workout Deleted Sucessfully") {
+
+                       return  DbQuery();                        
+                        
+                    }
+
+                    
 
                 }
 
@@ -76,7 +83,7 @@ function Viewworkout() {
 
             }
 
-            NetworkCall();
+            DeleteWorkout();
 
         }
     }

@@ -168,19 +168,14 @@ function Profile() {
 
 
 
-        <div className="image-container">
-            <img className="profilepicture" src={`http://localhost:8001/uploads/${profilepicture}`} alt="userpicture" />
-        </div>
+    <img className="profilepicture" src={`http://localhost:8001/uploads/${profilepicture}`} alt="userpicture" />
         <h1>{displayname} ,  Yours Profile Stats !</h1>
-        <br /><br /><br /><br />
-
-
         <h2> username : {username} </h2>
         <h2> Its been {activedays} Since youre working out . Keep Going !</h2>        
-        <br /><br /><br /><br /><br />
-        <Link className="links" to="/trackworkout" state={{ name: displayname }} > Track Your workout</Link>
+        <br /><br /><br />
+        <Link className="goto" to="/trackworkout" state={{ name: displayname }} > Track Your workout</Link>
         &nbsp; &nbsp; &nbsp; &nbsp;
-        <Link className="links" to="/viewworkout">View Your Workout</Link>
+        <Link className="goto" to="/viewworkout">View Your Workout</Link>
         <br /><br /><br />
 
 

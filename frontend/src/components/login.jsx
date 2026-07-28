@@ -84,7 +84,6 @@ DbQuery();
       <form onSubmit={handleSubmit(AfterSubmit)}>
          <h2>Username</h2>
          <input type="text" placeholder="Enter your username" required  {...register("username")}  />
-         <br /><br />
          <h2>Password</h2>
          <input type="password" placeholder="Enter your password" required   {...register("password")} />
          <br /><br />
