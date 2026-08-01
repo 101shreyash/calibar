@@ -100,7 +100,6 @@ p {
 }
 
 
-
 .profilepicture {
   border: 5px solid #aecaff;;
   border-radius: 50%;
@@ -127,3 +126,4 @@ p {
 .goto:hover{
   background-color: #0466c8;
 }
+
