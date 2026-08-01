@@ -8,7 +8,7 @@ import { nanoid } from "nanoid";
 import multer from "multer";
 
 const app = express();
-const Port = process.env.PORT
+const Port = process.env.PORT;
 
 const uploadfile = multer({ dest: "profilepicture/" });
 
@@ -22,7 +22,7 @@ app.use(
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
-app.use("/uploads" , express.static("profilepicture/")) // serve files from this particular folder
+app.use("/uploads", express.static("profilepicture/")); // serve files from this particular folder
 
 app
   .route("/signup")
@@ -618,11 +618,8 @@ app
         );
 
         res.json({
-          message : result.rows[0].profilepicture
-        })
-
-       
-          
+          message: result.rows[0].profilepicture,
+        });
       } catch (error) {
         console.log(error.message);
         return res.status(500).json({
@@ -633,6 +630,53 @@ app
     }
 
     DbQuery();
+  });
+
+app
+  .route("/compete")
+
+  .post(jwtvalidation, (req, res) => {
+
+    async function DbQuery() {
+
+      const rivalusername = req.body.rivalusername
+
+      try {
+        const result = await pool.query(
+          `SELECT users.username , users.name , users.profilepicture ,
+           workouts.workoutname , workouts.totalreps , workouts.workoutdate, workouts.totalsets , workouts.workoutid
+           FROM users INNER JOIN workouts ON users.userid = workouts.userid WHERE username = $1`, [rivalusername]
+        );
+
+
+        if (result.rowCount === 0) {
+
+         return res.status(404).json({
+            success : false,
+            message : "Username doesnot exists please try valid username"
+          })
+          
+        }
+
+        console.log(result.rows);
+        
+       return res.status(200).json(result.rows)
+
+        
+
+
+      } catch (error) {
+        console.log(error.message);
+        return res.status(500).json({
+          success: false,
+          message: "Server Error",
+        });
+      }
+    }
+
+    DbQuery();
+
+
   });
 
 app.listen(Port, () => {
